@@ -7,12 +7,12 @@ SETLOCAL
 
 set SRCDIR=%~dp0
 set INSTALLDIR=%~dp0
-SET ZIP="C:\Program Files\7-zip\7z.exe"
-set GIT=C:\Program Files (x86)\Git\bin\git.exe
+SET ZIP="C:\Program Files\7-Zip\7z.exe"
+set GIT=C:\Program Files\Git\bin\git.exe
 set SIGNTOOL=C:\Build\sign_output.bat
 
 set GIT=C:\Program Files\Git\bin\git.exe
-IF NOT EXIST %GIT% set GIT=C:\Program Files (x86)\Git\bin\git.exe
+IF NOT EXIST %GIT% set GIT=C:\Program Files\Git\bin\git.exe
 
 IF "%1"=="no-clean" GOTO noClean
 ECHO STEP 1) Deleting Output Directories
@@ -34,19 +34,19 @@ cd %SRCDIR%\third-party
 CALL build_openssl.bat
 :noClean
 
-:doBuild
-ECHO STEP 4) Building CertificateGenerator
-cd %SRCDIR%
-IF %BUILD_NUMBER% GTR 0 ECHO #define BUILD_NUMBER %BUILD_NUMBER% > CertificateGenerator\BuildVersion.h
-msbuild "CertificateGenerator Solution.sln" /p:Configuration=Release 
+REM :doBuild
+REM ECHO STEP 4) Building CertificateGenerator
+REM cd %SRCDIR%
+REM IF %BUILD_NUMBER% GTR 0 ECHO #define BUILD_NUMBER %BUILD_NUMBER% > CertificateGenerator\BuildVersion.h
+REM msbuild "CertificateGenerator Solution.sln" /p:Configuration=Release 
 
-ECHO STEP 5) Sign the Binaries
-IF EXIST "%SIGNTOOL%" CALL "%SIGNTOOL%" %INSTALLDIR%\bin\*.exe /dual
+REM ECHO STEP 5) Sign the Binaries
+REM IF EXIST "%SIGNTOOL%" CALL "%SIGNTOOL%" %INSTALLDIR%\bin\*.exe /dual
 
-ECHO STEP 6) ZIP the Binaries
-CD %INSTALLDIR%\bin
-%ZIP% a "Opc.Ua.CertificateGenerator-1.1.342.%BUILD_NUMBER%.zip" "*.exe"
-ECHO Created 'Opc.Ua.CertificateGenerator-1.1.342.%BUILD_NUMBER%.zip'
+REM ECHO STEP 6) ZIP the Binaries
+REM CD %INSTALLDIR%\bin
+REM %ZIP% a "Opc.Ua.CertificateGenerator-1.1.342.%BUILD_NUMBER%.zip" "*.exe"
+REM ECHO Created 'Opc.Ua.CertificateGenerator-1.1.342.%BUILD_NUMBER%.zip'
 
 ECHO *** ALL DONE ***
 GOTO theEnd
