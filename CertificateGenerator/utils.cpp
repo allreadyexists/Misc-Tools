@@ -27,6 +27,16 @@
  * http://opcfoundation.org/License/MIT/1.00/
  * ======================================================================*/
 
+/* System Headers */
+#include <windows.h>
+#include <time.h>
+
+/* UA platform definitions */
+#include <opcua.h>
+
+/*============================================================================
+* CreateGuid
+*===========================================================================*/
 OpcUa_Guid* OpcUa_P_Guid_Create(OpcUa_Guid* Guid)
 {
 	if (UuidCreate((UUID*)Guid) != RPC_S_OK)
